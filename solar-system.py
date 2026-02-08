@@ -44,6 +44,7 @@ class Question:
                     return self.massAnswer(item.name, item.mass)
                 if self.isTemperatureQuestion(self.question):
                     return self.temperatureAnswer(item.name, item.temperature)
+                return f"{self.moonAnswer(item.name, item.moons)} \n{self.massAnswer(item.name, item.mass)} \n{self.temperatureAnswer(item.name, item.temperature)}"
         return "no match"
 
 def __main__():
@@ -52,7 +53,7 @@ def __main__():
         Planet("Venus", "3.3022×10^23 kg", "7 km", 427, [Moon("Bruja"), Moon("Moona")]),
         Planet("Earth", "34 kg", "46,000,000 km", 56, [Moon("Luna")])
         ]
-    user_question = Question(input("My name is Cosmos. Ask me about the Solar System. "), planets)
+    user_question = Question(input("My name is Cosmos🌝. Ask me about the Solar System. "), planets)
     answer = user_question.answer()
     print(answer)
 
