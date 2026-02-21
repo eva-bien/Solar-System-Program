@@ -2,16 +2,17 @@ class Planet:
     def __init__(self, name, mass, distance_from_the_sun, moons=[]):
         self.name = name
         # As mass is such a large number, I opted to use scientific notation as a data type. 
-        # Earth mass on Wikipedia is (5.97217±0.00028)×10^24 kg which is represented by scientific notation as 5.97217e24.
+        # Earth mass on Wikipedia is 5.97217×10^24 kg which is represented by scientific notation as 5.97217e24.
         # https://richardkilleen.co.uk/blog/python/python-scientific-notation/#:~:text=Right%20so%20python%20scientific%20notation,%2C%20you%20write%201e%2D06.
         self.mass = mass 
         self.distance_from_the_sun = distance_from_the_sun
+        # As per the brief I am not including numbers of moons larger than 30.
         self.moons = moons
 
     def convertMass(self, mass):
-        # Scientific notation is not human-readable. Below is a method of converting the scientific number into a well displayed number.
+        # Scientific notation is not human-readable. Below is a method of converting the scientific number into a well displayed number.  Most of the planets in the data set rounded the mass to 5 decimal places, so I have kept it consistent. 
         # I used this discussion as inspiration: https://stackoverflow.com/questions/56029841/how-to-print-coefficient-and-exponent-separate-from-each-other-in-python.
-        base, power = f"{mass:.4e}".split("e")
+        base, power = f"{mass:.5e}".split("e")
         power = int(power)
         return f"{base} x 10^{power} kg"
 
@@ -56,6 +57,8 @@ class Question:
         return None
 
     def answer(self):
+        if self.question == "":
+            return f"Please enter a valid question."
         if "pluto" in self.question.lower():
             return self.plutoAnswer()
 
@@ -92,5 +95,8 @@ def __main__():
     print(answer)
 
 
-__main__()
+
+
+if __name__ == "__main__":
+    __main__()
 
