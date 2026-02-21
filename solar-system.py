@@ -1,9 +1,8 @@
 class Planet:
-    def __init__(self, name, mass, distance, temperature, moons=[]):
+    def __init__(self, name, mass, distance_from_the_sun, moons=[]):
         self.name = name
         self.mass = mass
-        self.distance = distance
-        self.temperature = temperature
+        self.distance_from_the_sun = distance_from_the_sun
         self.moons = moons
 
 class Moon:
@@ -27,13 +26,6 @@ class Question:
     
     def isMassQuestion(self, question):
         return "mass" in question.lower() or "big" in question.lower() or "size" in question.lower() or "heavy" in question.lower() or "kg" in question.lower()
-    
-    def temperatureAnswer(self, name, temperature):
-        return f"{name.title()} has a temperature of {temperature} degrees Celsius." 
-    
-    def isTemperatureQuestion(self, question):
-        return "temperature" in question.lower() or "hot" in question.lower() or "cold" in question.lower() or "degree" in question.lower()
-
 
     def answer(self):
         for item in self.planets:
@@ -42,16 +34,12 @@ class Question:
                     return self.moonAnswer(item.name, item.moons)
                 if self.isMassQuestion(self.question):
                     return self.massAnswer(item.name, item.mass)
-                if self.isTemperatureQuestion(self.question):
-                    return self.temperatureAnswer(item.name, item.temperature)
-                return f"{self.moonAnswer(item.name, item.moons)} \n{self.massAnswer(item.name, item.mass)} \n{self.temperatureAnswer(item.name, item.temperature)}"
+                return f"{self.moonAnswer(item.name, item.moons)} \n{self.massAnswer(item.name, item.mass)}"
         return "no match"
 
 def __main__():
     planets = [
-        Planet("Mercury", "3.3022×10^23 kg", "46,000,000 km", 427, []), 
-        Planet("Venus", "3.3022×10^23 kg", "7 km", 427, [Moon("Bruja"), Moon("Moona")]),
-        Planet("Earth", "34 kg", "46,000,000 km", 56, [Moon("Luna")])
+        Planet("Earth", 5.97217e24, (0.98, 1.02), [Moon("The Moon")])
         ]
     user_question = Question(input("My name is Cosmos🌝. Ask me about the Solar System. "), planets)
     answer = user_question.answer()
