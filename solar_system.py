@@ -45,16 +45,17 @@ class Question:
         return f"{name.title()} has a mass of {mass}." 
     
     def isMassQuestion(self, question):
-        return "mass" in question.lower() or "big" in question.lower() or "size" in question.lower() or "heavy" in question.lower() or "kg" in question.lower()
+        return "mass" in question.lower() or "big" in question.lower() or "size" in question.lower() or "heavy" in question.lower() or "kg" in question.lower() or "weight" in question.lower()
 
     def plutoAnswer(self):
         return "Pluto is not a planet. Upon first discovery in 1930, Pluto was considered a planet in the Solar System, but in 2006 was reclassified as a dwarf planet."
 
     def matchPlanetToQuestion(self, question):
+        matched_planets = []
         for item in self.planets:
             if item.name.lower() in question.lower():
-                return item
-        return None
+                matched_planets.append(item)
+        return matched_planets
 
     def answer(self):
         if self.question == "":
@@ -62,25 +63,29 @@ class Question:
         if "pluto" in self.question.lower():
             return self.plutoAnswer()
 
-        found_planet = self.matchPlanetToQuestion(self.question)
-        if found_planet == None:
+        matched_planets = self.matchPlanetToQuestion(self.question)
+        if len(matched_planets) == 0:
             list_of_planets = []
             for planet in self.planets:
                 list_of_planets.append(planet.name)
-            return f"I couldn't find the answer to your question. I can answer questions about the following planets: {', '.join(list_of_planets[:-1])}, and {list_of_planets[-1]}."
+            return f"I couldn't find the answer to your question. I can answer questions about one of the following planets: {', '.join(list_of_planets[:-1])}, and {list_of_planets[-1]}."
+        if len(matched_planets) > 1:
+            return f"You asked about two or more planets. Please only ask about one planet."
         
-        converted_mass = found_planet.convertMass(found_planet.mass)
+        matched_planet = matched_planets[0]
+        
+        converted_mass = matched_planet.convertMass(matched_planet.mass)
         if "moon" in self.question.lower():
-            return self.moonAnswer(found_planet.name, found_planet.moons)
-        if "sun" in self.question.lower():
-            return self.distanceFromSunAnswer(found_planet.name, found_planet.distance_from_the_sun)
+            return self.moonAnswer(matched_planet.name, matched_planet.moons)
         if "aphelion" in self.question.lower():
-            return self.minMaxFromSunAnswer(found_planet.name, "aphelion", found_planet.distance_from_the_sun)
+            return self.minMaxFromSunAnswer(matched_planet.name, "aphelion", matched_planet.distance_from_the_sun)
         if "perihelion" in self.question.lower():
-            return self.minMaxFromSunAnswer(found_planet.name, "perihelion", found_planet.distance_from_the_sun)
+            return self.minMaxFromSunAnswer(matched_planet.name, "perihelion", matched_planet.distance_from_the_sun)
+        if "sun" in self.question.lower():
+            return self.distanceFromSunAnswer(matched_planet.name, matched_planet.distance_from_the_sun)
         if self.isMassQuestion(self.question):
-            return self.massAnswer(found_planet.name, converted_mass)
-        return f"{found_planet.name} is a planet in the Solar System. \n{self.moonAnswer(found_planet.name, found_planet.moons)} \n{self.massAnswer(found_planet.name, converted_mass)} \n{self.distanceFromSunAnswer(found_planet.name, found_planet.distance_from_the_sun)}"
+            return self.massAnswer(matched_planet.name, converted_mass)
+        return f"{matched_planet.name} is a planet in the Solar System. \n{self.moonAnswer(matched_planet.name, matched_planet.moons)} \n{self.massAnswer(matched_planet.name, converted_mass)} \n{self.distanceFromSunAnswer(matched_planet.name, matched_planet.distance_from_the_sun)}"
 
 planets = [
 
