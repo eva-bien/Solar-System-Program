@@ -2,7 +2,9 @@
 
 ## Running Project/Tests
 
-Run it via this link:
+The main entry of the project is GUI.py. You can run this file to spin up the GUI app.
+
+### Tests
 
 Run the question_test.py by inputting this into the command line: python3 -m pytest question_test.py
 

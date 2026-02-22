@@ -7,10 +7,8 @@ def askQuestion():
     question = Question(user_question, planets)
     answer.config(text = question.answer())
     
-
 def clearQuestion():
     question_area.delete("1.0", "end-1c")
-
 
 root = tk.Tk()
 root.title("Cosmos")
