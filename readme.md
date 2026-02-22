@@ -15,3 +15,7 @@ This is hosted on this link:
 ## AI usage
 
 this is hosdte on this link....
+
+## Images
+
+I have used this background image: https://wall.alphacoders.com/big.php?i=1274991

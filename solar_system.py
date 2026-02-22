@@ -133,15 +133,5 @@ planets = [
 
 ]
 
-def __main__():
 
-    user_question = Question(input("My name is Cosmos🌝. Ask me about the Solar System. "), planets)
-    answer = user_question.answer()
-    print(answer)
-
-
-
-
-if __name__ == "__main__":
-    __main__()
 
